@@ -1,6 +1,5 @@
 #!/bin/bash
-# Author: Ravi Prakash Yadav
-# Generate random values for each environment variable
+
 APP_KEYS=$(node -e "console.log(require('crypto').randomBytes(32).toString('hex'))")
 API_TOKEN_SALT=$(node -e "console.log(require('crypto').randomBytes(16).toString('base64'))")
 ADMIN_JWT_SECRET=$(node -e "console.log(require('crypto').randomBytes(16).toString('base64'))")
