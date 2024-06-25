@@ -3,7 +3,7 @@ variable "region" {
 }
 
 variable "ami" {
-  default = "ami-053a617c6207ecc7b"
+  default = "ami-09627c82937ccdd6d"
 }
 
 variable "ec2_private_key" {

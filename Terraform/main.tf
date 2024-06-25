@@ -4,19 +4,15 @@ resource "random_string" "sg_suffix" {
   upper   = false
 }
 
-##################################
-## EC2 Instance
-##################################
-
 resource "aws_instance" "strapi_instance" {
   ami           = var.ami
   instance_type = "t2.medium"
-  key_name      = "ravi-key-pair-strapi"
+  key_name      = "paramesh-key-pair-strapi"
   security_groups = [aws_security_group.strapi_sg.name]
   associate_public_ip_address = true
 
   tags = {
-    Name = "Ravi-Strapi-Instance"
+    Name = "Paramesh-Strapi-Instance"
   }
 
   provisioner "remote-exec" {
@@ -26,8 +22,8 @@ resource "aws_instance" "strapi_instance" {
       "sudo usermod -aG docker ubuntu",     
       "sudo systemctl enable docker",    
       "sudo systemctl start docker",     
-      "sudo docker pull raviiai/strapi:latest",  
-      "sudo docker run -d -p 1337:1337 --name my_strapi raviiai/strapi:latest" 
+      "sudo docker pull parameswaran17/docker_image:latest",  
+      "sudo docker run -d -p 1337:1337 --name my_strapi parameswaran17/docker_image:latest" 
     ]
 
     connection {
@@ -38,10 +34,6 @@ resource "aws_instance" "strapi_instance" {
     }
   }
 }
-
-##################################
-## Security Group
-##################################
 
 resource "aws_security_group" "strapi_sg" {
   name        = "strapi-security-group2-${random_string.sg_suffix.result}"
@@ -69,6 +61,6 @@ resource "aws_security_group" "strapi_sg" {
   }
 
   tags = {
-    Name = "Strapi Security Group"
+    Name = "Paramesh Security Group"
   }
 }
