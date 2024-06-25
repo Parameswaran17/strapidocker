@@ -1,11 +1,26 @@
+# variables.tf
+variable "instance_type" {
+  description = "Type of EC2 instance"
+  type        = string
+}
+
+variable "ami_id" {
+  description = "AMI ID to use for the instance"
+  type        = string
+}
+
+variable "key_name" {
+  description = "Key pair name"
+  type        = string
+}
+
+variable "private_key_path" {
+  description = "Path to the private key file"
+  type        = string
+}
+
 variable "region" {
-  default = "eu-west-2"
+  description = "AWS region"
+  type        = string
 }
 
-variable "ami" {
-  default = "ami-09627c82937ccdd6d"
-}
-
-variable "ec2_private_key" {
-  
-}

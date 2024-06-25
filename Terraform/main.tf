@@ -6,7 +6,7 @@ resource "random_string" "sg_suffix" {
 
 resource "aws_instance" "strapi_instance" {
   ami           = var.ami
-  instance_type = "t2.medium"
+  instance_type = "var.instance_type"
   key_name      = "paramesh-key-pair-strapi"
   security_groups = [aws_security_group.strapi_sg.name]
   associate_public_ip_address = true
