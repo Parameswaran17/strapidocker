@@ -42,6 +42,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          timeout: 10m
           script: |
             echo "Navigating to target directory..."
             cd /home/ubuntu/strapidocker || { echo "Directory not found"; exit 1; }
@@ -61,5 +62,6 @@ jobs:
             echo "Installing project dependencies..."
             npm install || { echo "npm install failed"; exit 1; }
             
-            echo "Starting Strapi..."
-            npm run develop || { echo "Strapi failed to start"; exit 1; }
+            echo "Starting Strapi in the background..."
+            nohup npm run develop > strapi.log 2>&1 &
+            echo "Strapi started."
