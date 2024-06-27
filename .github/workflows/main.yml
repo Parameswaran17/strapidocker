@@ -13,6 +13,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
       - name: Install dependencies
         run: npm install
 
@@ -26,6 +31,23 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /home/ubuntu/strapidocker
-            npm install
-            npm run develop
+            echo "Ensuring target directory exists..."
+            mkdir -p /home/ubuntu/strapidocker
+            
+            echo "Navigating to target directory..."
+            cd /home/ubuntu/strapidocker || { echo "Directory not found"; exit 1; }
+            
+            echo "Checking npm installation..."
+            if ! command -v npm &> /dev/null; then
+              echo "Installing Node.js and npm..."
+              curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+              sudo apt-get install -y nodejs
+            else
+              echo "npm is already installed"
+            fi
+            
+            echo "Installing project dependencies..."
+            npm install || { echo "npm install failed"; exit 1; }
+            
+            echo "Starting Strapi..."
+            npm run develop || { echo "Strapi failed to start"; exit 1; }
