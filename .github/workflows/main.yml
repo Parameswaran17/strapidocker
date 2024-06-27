@@ -27,6 +27,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /home/ubuntu/strapidocker
-            npm install -g strapi
             npm install
             npm run develop
