@@ -55,6 +55,9 @@ jobs:
               echo "npm is already installed"
             fi
             
+            echo "Killing any process using port 1337..."
+            sudo fuser -k 1337/tcp || true
+
             echo "Installing project dependencies..."
             npm install || { echo "npm install failed"; exit 1; }
             
