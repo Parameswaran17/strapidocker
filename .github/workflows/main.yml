@@ -33,9 +33,9 @@ jobs:
           source: "."
           target: "/home/ubuntu/strapidocker"
 
-       - name: Run Strapi on EC2
-         uses: appleboy/ssh-action@master
-         with:
+      - name: Run Strapi on EC2
+        uses: appleboy/ssh-action@master
+        with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
