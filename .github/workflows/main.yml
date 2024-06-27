@@ -25,18 +25,24 @@ jobs:
         run: npm run build
 
       - name: Deploy to EC2
-        uses: appleboy/ssh-action@master
+        uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "."
+          target: "/home/ubuntu/strapidocker"
+
+       - name: Run Strapi on EC2
+         uses: appleboy/ssh-action@master
+         with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            echo "Ensuring target directory exists..."
-            mkdir -p /home/ubuntu/strapidocker
-            
             echo "Navigating to target directory..."
             cd /home/ubuntu/strapidocker || { echo "Directory not found"; exit 1; }
-            
+
             echo "Checking npm installation..."
             if ! command -v npm &> /dev/null; then
               echo "Installing Node.js and npm..."
@@ -45,9 +51,9 @@ jobs:
             else
               echo "npm is already installed"
             fi
-            
+
             echo "Installing project dependencies..."
             npm install || { echo "npm install failed"; exit 1; }
-            
+
             echo "Starting Strapi..."
             npm run develop || { echo "Strapi failed to start"; exit 1; }
