@@ -18,6 +18,10 @@ resource "aws_instance" "strapi_instance" {
   provisioner "remote-exec" {
     inline = [
       "sudo apt-get update",
+      "sudo apt-get install -y nodejs npm git",
+      "sudo npm install -g strapi",
+      "git clone https://github.com/Parameswaran17/strapidocker.git .",  # Clone repository into current directory
+      "cd /home/ubuntu/strapidocker",
       "sudo apt-get install -y docker.io", 
       "sudo usermod -aG docker ubuntu",     
       "sudo systemctl enable docker",    
