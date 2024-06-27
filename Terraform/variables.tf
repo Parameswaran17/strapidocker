@@ -16,7 +16,7 @@ variable "key_name" {
 
 variable "private_key_path" {
   description = "Path to the private key file"
-  type        = string
+  type        = string  
 }
 
 variable "region" {

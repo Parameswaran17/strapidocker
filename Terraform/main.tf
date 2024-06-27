@@ -5,9 +5,9 @@ resource "random_string" "sg_suffix" {
 }
 
 resource "aws_instance" "strapi_instance" {
-  ami           = var.ami
-  instance_type = "var.instance_type"
-  key_name      = "paramesh-key-pair-strapi"
+  ami           = var.ami_id
+  instance_type = var.instance_type
+  key_name      = var.key_name
   security_groups = [aws_security_group.strapi_sg.name]
   associate_public_ip_address = true
 
@@ -29,7 +29,7 @@ resource "aws_instance" "strapi_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = var.ec2_private_key
+      private_key = file(var.private_key_path)
       host        = self.public_ip
     }
   }
