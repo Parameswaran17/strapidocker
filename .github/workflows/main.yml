@@ -1,3 +1,4 @@
+#main.yml
 name: Deploy Strapi to EC2
 
 on:
@@ -34,7 +35,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "."
-          target: "/home/ubuntu/strapidocker"
+          target: "/home/ubuntu/strapidocker/strapi"
 
       - name: Run Strapi on EC2
         uses: appleboy/ssh-action@master
@@ -45,8 +46,8 @@ jobs:
           timeout: 10m
           script: |
             echo "Navigating to target directory..."
-            cd /home/ubuntu/strapidocker || { echo "Directory not found"; exit 1; }
-
+            cd /home/ubuntu/strapidocker/strapi || { echo "Directory not found"; exit 1; }
+            
             echo "Checking npm installation..."
             if ! command -v npm &> /dev/null; then
               echo "Installing Node.js and npm..."
