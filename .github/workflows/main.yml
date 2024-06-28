@@ -16,15 +16,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18'
+          node-version: '18'  # Adjust Node.js version as per your project requirements
 
       - name: Install dependencies
+        working-directory: ./strapidocker  # Set working directory to strapidocker folder
         run: npm install
 
       - name: Build Strapi
+        working-directory: ./strapidocker  # Set working directory to strapidocker folder
         run: npm run build
 
       - name: Ensure proper permissions
+        working-directory: ./strapidocker  # Set working directory to strapidocker folder
         run: chmod -R 755 .
 
       - name: Deploy to EC2
@@ -33,7 +36,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "."
+          source: "./strapidocker"  # Adjust source directory if necessary
           target: "/home/ubuntu/strapidocker"
 
       - name: Run Strapi on EC2
@@ -44,7 +47,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           timeout: 10m
           script: |
-            echo "Navigating to target directory..."
+            echo "Navigating to Strapi directory..."
             cd /home/ubuntu/strapidocker || { echo "Directory not found"; exit 1; }
             
             echo "Checking npm installation..."
@@ -65,3 +68,4 @@ jobs:
             echo "Starting Strapi in the background..."
             nohup npm run develop > strapi.log 2>&1 &
             echo "Strapi started."
+
