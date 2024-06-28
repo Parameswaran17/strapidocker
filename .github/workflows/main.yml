@@ -21,17 +21,17 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd strapidocker
+          cd ${{ github.workspace }}/strapidocker
           npm install
 
       - name: Build Strapi
         run: |
-          cd strapidocker
+          cd ${{ github.workspace }}/strapidocker
           npm run build
 
       - name: Ensure proper permissions
         run: |
-          cd strapidocker
+          cd ${{ github.workspace }}/strapidocker
           chmod -R 755 .
 
       - name: Deploy to EC2
@@ -40,7 +40,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "strapidocker"
+          source: "${{ github.workspace }}/strapidocker"
           target: "/home/ubuntu/strapidocker/strapi"
 
       - name: Run Strapi on EC2
