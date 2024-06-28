@@ -1,5 +1,5 @@
 {
-  "name": "strapi-project",
+  "name": "my-project",
   "private": true,
   "version": "0.1.0",
   "description": "A Strapi application",
@@ -12,10 +12,10 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "@strapi/strapi": "4.25.0",
-    "@strapi/plugin-users-permissions": "4.25.0",
-    "@strapi/plugin-i18n": "4.25.0",
-    "@strapi/plugin-cloud": "4.25.0",
+    "@strapi/strapi": "4.25.1",
+    "@strapi/plugin-users-permissions": "4.25.1",
+    "@strapi/plugin-i18n": "4.25.1",
+    "@strapi/plugin-cloud": "4.25.1",
     "better-sqlite3": "8.6.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -26,7 +26,7 @@
     "name": "A Strapi developer"
   },
   "strapi": {
-    "uuid": "6e6a969a-9751-4769-8684-1b41b49d9f81"
+    "uuid": "8633b2d0-1fdd-4a2d-9fdd-c38ee7e030cc"
   },
   "engines": {
     "node": ">=18.0.0 <=20.x.x",
