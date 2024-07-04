@@ -1,3 +1,24 @@
+provider "aws" {
+  region = "eu-west-2"  # Adjust to your desired region
+}
+
+# Data source to fetch the latest Ubuntu 22.04 AMI
+data "aws_ami" "latest_ubuntu_22_04" {
+  most_recent = true
+
+  owners = ["099720109477"]  # Ubuntu's owner ID
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+  }
+}
+
+# Data source to fetch the SSH key pair
+data "aws_key_pair" "my_key" {
+  key_name = var.key_name
+}
+
 resource "random_string" "sg_suffix" {
   length  = 6  # Adjust the length as needed for uniqueness
   special = false
@@ -5,9 +26,9 @@ resource "random_string" "sg_suffix" {
 }
 
 resource "aws_instance" "strapi_instance" {
-  ami           = var.ami_id
+  ami           = data.aws_ami.latest_ubuntu_22_04.id
   instance_type = var.instance_type
-  key_name      = var.key_name
+  key_name      = data.aws_key_pair.my_key.key_name
   security_groups = [aws_security_group.strapi_sg.name]
   associate_public_ip_address = true
 

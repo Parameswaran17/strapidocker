@@ -4,11 +4,6 @@ variable "instance_type" {
   type        = string
 }
 
-variable "ami_id" {
-  description = "AMI ID to use for the instance"
-  type        = string
-}
-
 variable "key_name" {
   description = "Key pair name"
   type        = string
